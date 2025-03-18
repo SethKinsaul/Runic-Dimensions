@@ -1,0 +1,10 @@
+# Ignore Unity-generated files
+Library/
+Logs/
+Temp/
+*.csproj
+*.sln
+*.userprefs
+.vs/
+.vscode/
+.idea/
