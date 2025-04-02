@@ -1,0 +1,43 @@
+Create the Fireball Object:
+
+1. In Unity, create a 3D Sphere or 2D Sprite to represent the fireball.
+
+- Add a Rigidbody component to the fireball object for physics behavior.
+
+- Add a Collider (e.g., Sphere Collider for 3D or Circle Collider for 2D) to detect collisions.
+
+- Optionally, add a Particle System for fire effects and an Audio Source for sound effects.
+
+2. Make It a Prefab:
+
+- Drag the fireball object into your Project window to create a prefab.
+
+- Delete the original fireball object from the scene.
+
+3. Create the Fire Point
+-Create an empty GameObject as a child of your character (e.g., name it "FirePoint").
+
+-Position the FirePoint where you want the fireball to spawn (e.g., in front of the character's hand).
+
+4. Write the Fireball Script
+- Create a script called FireballSpell and attach it to your character.
+
+5. Assign Components in Unity
+- Attach the FireballSpell script to your character.
+
+In the Inspector:
+
+- Drag and drop your fireball prefab into the FireballPrefab field.
+
+- Drag and drop your FirePoint GameObject into the FirePoint field.
+
+- Set FireballSpeed to control how fast it travels.
+
+- Change CastKey if you want a different button (e.g., KeyCode.Mouse1 for right-click).
+
+6. Test Your Fireball
+- Press Play in Unity.
+
+- Press your assigned button (default is "F") to cast a fireball.
+
+- Observe that the fireball spawns at the FirePoint and moves forward.
