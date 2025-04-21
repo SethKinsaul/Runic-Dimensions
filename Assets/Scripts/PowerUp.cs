@@ -24,20 +24,36 @@ public class PowerUp : MonoBehaviour
                 Debug.LogWarning($"No audio clip assigned for {spellName} power-up!");
             }
 
-            // **Show notification if this is the Dimension Twisting Spell**
-            if (spellName == "DimensionTwistingSpell" && spellNotificationText != null)
+            // Show notification if this is a spell that has one
+            if ((spellName == "DimensionTwistingSpell" || spellName == "IceSpell" || spellName == "FireballSpell") && spellNotificationText != null)
             {
-                ShowSpellNotification();
+                ShowSpellNotification(spellName);
             }
 
-            Destroy(gameObject);  // Remove the power-up
+            gameObject.SetActive(false);  // Remove the power-up
         }
     }
 
-    void ShowSpellNotification()
+    void ShowSpellNotification(string spell)
     {
         Debug.Log("Text Activated");
-        spellNotificationText.text = "Press 'T' to activate Dimension Twisting Spell";
+
+        switch (spell)
+        {
+            case "DimensionTwistingSpell":
+                spellNotificationText.text = "Press 'T' to activate Dimension Twisting Spell";
+                break;
+            case "IceSpell":
+                spellNotificationText.text = "Press 'G' to cast Ice Spell";
+                break;
+            case "FireballSpell":
+                spellNotificationText.text = "Press 'F' to cast Fireball Spell";
+                break;
+            default:
+                Debug.Log("Spell picked up!");
+                break;
+        }
+
         spellNotificationText.gameObject.SetActive(true);
         StartCoroutine(HideNotificationAfterDelay(10f)); // Hide after 10 seconds
     }

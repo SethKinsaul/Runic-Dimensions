@@ -7,6 +7,9 @@ TagManager:
   - Platform
   - SpellPickups
   - DimensionTwistingSpell
+  - Water
+  - Enemy
+  - Projectile
   layers:
   - Default
   - TransparentFX
@@ -16,9 +19,9 @@ TagManager:
   - UI
   - Player
   - PowerUps
-  - Suimono_Water
-  - Suimono_Depth
-  - Suimono_Screen
+  - Checkpoint
+  - 
+  - 
   - 
   - 
   - 

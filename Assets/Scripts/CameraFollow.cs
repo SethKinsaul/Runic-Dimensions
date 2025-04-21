@@ -32,7 +32,7 @@ public class CameraFollow : MonoBehaviour
 
             if (!isIn3DMode) // 2D mode (Only follow X-axis)
             {
-                targetPosition = new Vector3(player.position.x + offset.x, player.position.y + offset.y, transform.position.z);
+                targetPosition = new Vector3(player.position.x + offset.x, player.position.y + offset.y, -7f);
             }
             else // 3D mode (Follow X, Y, and Z axes)
             {
@@ -45,6 +45,7 @@ public class CameraFollow : MonoBehaviour
         // Toggle camera with 'T'
         if (Input.GetKeyDown(KeyCode.T) && spellManager != null && spellManager.IsSpellActive("DimensionTwistingSpell"))
         {
+            AudioManager.Instance.PlayDimensionTwistingSound();
             SwitchCamera();
         }
     }

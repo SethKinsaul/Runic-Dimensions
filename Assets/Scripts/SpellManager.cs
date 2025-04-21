@@ -16,7 +16,7 @@ public class SpellManager : MonoBehaviour
 
     public List<SpellData> spellPowerUps = new List<SpellData>();  // List of all power-ups
 
-    private Dictionary<string, bool> activeSpells = new Dictionary<string, bool>();
+    public Dictionary<string, bool> activeSpells = new Dictionary<string, bool>();
     private Dictionary<string, SphereCollider> spellColliders = new Dictionary<string, SphereCollider>();
 
     private void Awake()
