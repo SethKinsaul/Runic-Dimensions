@@ -44,6 +44,7 @@ public class GameOverManager : MonoBehaviour
         Time.timeScale = 0f;
     }
 
+    [System.Obsolete]
     public void Retry()
     {
         Time.timeScale = 1f;
@@ -85,16 +86,27 @@ public class GameOverManager : MonoBehaviour
             }
         }
         // Reset spells stored in dictionary
-        var spellManager = player.GetComponent<SpellManager>();
-        if (spellManager != null)
+        if (SpellManager.Instance.activeSpells.ContainsKey("DimensionTwistingSpell"))
+            SpellManager.Instance.activeSpells["DimensionTwistingSpell"] = false;
+        if (SpellManager.Instance.activeSpells.ContainsKey("IceSpell"))
+            SpellManager.Instance.activeSpells["IceSpell"] = false;
+        if (SpellManager.Instance.activeSpells.ContainsKey("FireballSpell"))
+            SpellManager.Instance.activeSpells["FireballSpell"] = false;
+
+        // Reset all water materials
+        WaterElement[] waterElements = FindObjectsOfType<WaterElement>();
+        foreach (var water in waterElements)
         {
-            if (spellManager.activeSpells.ContainsKey("DimensionTwistingSpell"))
-                spellManager.activeSpells["DimensionTwistingSpell"] = false;
-            if (spellManager.activeSpells.ContainsKey("IceSpell"))
-                spellManager.activeSpells["IceSpell"] = false;
-            if (spellManager.activeSpells.ContainsKey("FireballSpell"))
-                spellManager.activeSpells["FireballSpell"] = false;
+            water.ResetMaterial();
+            // Reset layer to Default
+            water.gameObject.layer = LayerMask.NameToLayer("Default");
+            BoxCollider box = water.GetComponent<BoxCollider>();
+            if (box != null)
+            {
+                box.isTrigger = true;
+            }
         }
+
         // Reset lives
         var lives = player.GetComponent<PlayerLives>();
         if (lives != null)

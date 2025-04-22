@@ -27,27 +27,46 @@ public class FireballProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Fireball hit enemy!");
-
-        // Destroy the enemy's parent GameObject (which should be the full Skeleton)
-        Transform enemyParent = other.transform.parent;
-        if (enemyParent != null)
+        if (other.CompareTag("Skeleton"))
         {
-            Destroy(enemyParent.gameObject);
-            // ?? Play death sound through AudioManager
-            AudioManager.Instance.PlayDeathSound();
-        }
-        else
-        {
-            // Fallback in case tag is on parent instead (rare, but safe check)
-            Destroy(other.gameObject);
-        }
+            Debug.Log("Fireball hit Skeleton!");
 
-        if (explosionEffect != null)
-        {
-            Instantiate(explosionEffect, transform.position, Quaternion.identity);
-        }
+            // Destroy the enemy's parent GameObject (which should be the full Skeleton)
+            Transform enemyParent = other.transform.parent;
+            if (enemyParent != null)
+            {
+                Destroy(enemyParent.gameObject);
+                // ?? Play death sound through AudioManager
+                AudioManager.Instance.PlayDeathSound();
+            }
+            else
+            {
+                // Fallback in case tag is on parent instead (rare, but safe check)
+                Destroy(other.gameObject);
+            }
 
-        Destroy(gameObject); // Remove fireball on hit
+            if (explosionEffect != null)
+            {
+                Instantiate(explosionEffect, transform.position, Quaternion.identity);
+            }
+
+            Destroy(gameObject); // Remove fireball on hit
+        }
+        if (other.CompareTag("Spider"))
+        {
+            // Destroy the enemy's parent GameObject (which should be the full Skeleton)
+            Transform enemyParent = other.transform.parent;
+            if (enemyParent != null)
+            {
+                Destroy(enemyParent.gameObject);
+                // ?? Play death sound through AudioManager
+                AudioManager.Instance.PlayDeathSound();
+            }
+            else
+            {
+                // Fallback in case tag is on parent instead (rare, but safe check)
+                Destroy(other.gameObject);
+            }
+        }
     }
 }

@@ -32,7 +32,7 @@ public class IceProjectile : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.CompareTag("Enemy"))
+        if(other.CompareTag("Skeleton"))
         {
             Debug.Log("Ice hit enemy!");
             AudioManager.Instance.PlayWaterFreezingSound();
