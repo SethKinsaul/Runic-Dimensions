@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Spider : MonoBehaviour
@@ -11,16 +12,33 @@ public class Spider : MonoBehaviour
     private Transform player;
     private float fireTimer;
 
+    [HideInInspector]
+    public Vector3 originalPosition;
+
+    // Freeze Variables
+    private bool isFrozen = false;
+    [Header("Freeze Visuals")]
+    public Color frozenColor = Color.cyan;
+    private Color originalColor;
+    [SerializeField] private Renderer[] limbRenderers; // Assign in inspector
+
+    public Transform spawnPoint;
+    private PlayerLives playerLives;
+    public float moveSpeed = 2f;
+    private float originalSpeed;
+
     void Start()
     {
         GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        originalPosition = transform.position;
         if (playerObj != null)
             player = playerObj.transform;
+        playerLives = player.GetComponent<PlayerLives>();
     }
 
     void Update()
     {
-        if (player == null) return;
+        if (player == null || isFrozen) return;
 
         float xDistance = Mathf.Abs(transform.position.x - player.position.x);
         if (xDistance <= shootRangeX)
@@ -46,5 +64,74 @@ public class Spider : MonoBehaviour
         {
             rb.linearVelocity = direction * projectileSpeed;
         }
+    }
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            Debug.Log("Player died!");
+
+            if (spawnPoint != null)
+            {
+                playerLives.TakeDamage();
+                //player.position = spawnPoint.position;
+            }
+        }
+    }
+
+    public void Freeze(float duration)
+    {
+        if (!isFrozen)
+        {
+            isFrozen = true;
+            originalSpeed = moveSpeed;
+            moveSpeed = 0f;
+
+            // Change material color or swap material on all child renderers
+            SetFrozenColor(true);
+            StartCoroutine(UnfreezeAfterDelay(duration));
+        }
+    }
+
+    private void SetFrozenColor(bool frozen)
+    {
+        Color freezeColor = frozen ? Color.cyan : Color.white;
+
+        foreach (Renderer rend in limbRenderers)
+        {
+            if (rend != null)
+            {
+                foreach (var mat in rend.materials)
+                {
+                    mat.color = freezeColor;
+                }
+            }
+        }
+    }
+    private IEnumerator UnfreezeAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        moveSpeed = originalSpeed;
+        isFrozen = false;
+
+        // Restore material color
+        SetFrozenColor(false);
+    }
+
+    private System.Collections.IEnumerator FreezeCoroutine(float duration)
+    {
+        isFrozen = true;
+        Debug.Log("Skeleton frozen!");
+
+        // Optional: Stop walk animation while frozen
+        //if (animator != null)
+        //{
+        //    animator.SetBool("Mini Simple Characters Armature|Walk", false);
+        //}
+
+        yield return new WaitForSeconds(duration);
+
+        isFrozen = false;
+        Debug.Log("Skeleton unfrozen.");
     }
 }

@@ -14,7 +14,6 @@ public class Skeleton : MonoBehaviour
 
     // Freeze Variables
     private bool isFrozen = false;
-
     [Header("Freeze Visuals")]
     //public Renderer skeletonRenderer; // Assign in Inspector
     public Color frozenColor = Color.cyan;

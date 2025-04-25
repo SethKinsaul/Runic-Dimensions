@@ -34,13 +34,24 @@ public class IceProjectile : MonoBehaviour
     {
         if(other.CompareTag("Skeleton"))
         {
-            Debug.Log("Ice hit enemy!");
+            Debug.Log("Ice hit Skeleton!");
             AudioManager.Instance.PlayWaterFreezingSound();
             // Freeze the enemy if it has the component
             Skeleton skeleton = other.GetComponentInParent<Skeleton>();
             if (skeleton != null)
             {
                 skeleton.Freeze(3f); // Freeze for 3 seconds
+            }
+        }
+        else if (other.CompareTag("Spider"))
+        {
+            Debug.Log("Ice hit Spider!");
+            AudioManager.Instance.PlayWaterFreezingSound();
+            // Freeze the enemy if it has the component
+            Spider spider = other.GetComponentInParent<Spider>();
+            if (spider != null)
+            {
+                spider.Freeze(3f); // Freeze for 3 seconds
             }
         }
         else if (other.CompareTag("Water"))

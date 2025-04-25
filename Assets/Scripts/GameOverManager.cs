@@ -18,6 +18,7 @@ public class GameOverManager : MonoBehaviour
     // Reset
     public ResettableObject[] powerUps;
     public ResettableObject[] skeletons;
+    public Spider[] spiders;
     //public GameObject Notifications;
 
     private void Start()
@@ -85,6 +86,19 @@ public class GameOverManager : MonoBehaviour
                 }
             }
         }
+
+        // Reset spiders
+        foreach (var spider in spiders)
+        {
+            if (spider != null && spider.gameObject != null)
+            {
+                spider.gameObject.SetActive(true);
+                spider.gameObject.transform.position = spider.originalPosition;
+
+                //spider.ResetState(); // Optional: Reset internal state
+            }
+        }
+
         // Reset spells stored in dictionary
         if (SpellManager.Instance.activeSpells.ContainsKey("DimensionTwistingSpell"))
             SpellManager.Instance.activeSpells["DimensionTwistingSpell"] = false;

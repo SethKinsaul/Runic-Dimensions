@@ -31,18 +31,20 @@ public class FireballProjectile : MonoBehaviour
         {
             Debug.Log("Fireball hit Skeleton!");
 
-            // Destroy the enemy's parent GameObject (which should be the full Skeleton)
+            // Get the skeleton's parent GameObject
             Transform enemyParent = other.transform.parent;
             if (enemyParent != null)
             {
-                Destroy(enemyParent.gameObject);
-                // ?? Play death sound through AudioManager
+                // Instead of Destroy, deactivate the skeleton
+                enemyParent.gameObject.SetActive(false);
+
+                // Play death sound
                 AudioManager.Instance.PlayDeathSound();
             }
             else
             {
-                // Fallback in case tag is on parent instead (rare, but safe check)
-                Destroy(other.gameObject);
+                // Fallback (in case no parent)
+                other.gameObject.SetActive(false);
             }
 
             if (explosionEffect != null)
@@ -50,7 +52,7 @@ public class FireballProjectile : MonoBehaviour
                 Instantiate(explosionEffect, transform.position, Quaternion.identity);
             }
 
-            Destroy(gameObject); // Remove fireball on hit
+            Destroy(gameObject); // Destroy the fireball
         }
         if (other.CompareTag("Spider"))
         {
@@ -58,14 +60,15 @@ public class FireballProjectile : MonoBehaviour
             Transform enemyParent = other.transform.parent;
             if (enemyParent != null)
             {
-                Destroy(enemyParent.gameObject);
+                // Instead of Destroy, deactivate the skeleton
+                enemyParent.gameObject.SetActive(false);
                 // ?? Play death sound through AudioManager
                 AudioManager.Instance.PlayDeathSound();
             }
             else
             {
-                // Fallback in case tag is on parent instead (rare, but safe check)
-                Destroy(other.gameObject);
+                // Fallback (in case no parent)
+                other.gameObject.SetActive(false);
             }
         }
     }
